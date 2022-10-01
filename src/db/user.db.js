@@ -19,7 +19,7 @@ export const createUser = async (payload) => {
 }
 
 export const createToken = async (id, token) => {
-    const sql = "insert into tokens (userId, token, created_at, updated_at) values ($1, $2, $3, $4)"
+    const sql = "insert into tokens (user_id, token, created_at, updated_at) values ($1, $2, $3, $4)"
     const params = [id, token, now, now]
     await query(sql, params)
 }

@@ -1,4 +1,4 @@
-import { query } from "../config"
+import { query } from "../config.js"
 
 const createUsers = 'create table if not exists users (id serial primary key, email varchar(255) unique not null, password varchar(255) not null, created_at timestamp not null, updated_at timestamp not null);'
 

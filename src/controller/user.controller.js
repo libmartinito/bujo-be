@@ -13,8 +13,9 @@ export const register = async (req, res) => {
         const user = await db.createUser(req.body)
         delete user[password]
         const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET)
-        await db.createToken(id, token)
+        await db.createToken(user.id, token)
         res.status(200).send({ user, token })
+        return
     } catch (err) {
         res.status(500).send(err)
     }
@@ -32,9 +33,11 @@ export const login = async (req, res) => {
         if (!isPasswordMatch) {
             res.status(400).send({ message: "Password does not match"})
         }
+        delete user[password]
         const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET)
-        await db.createToken(id, token)
+        await db.createToken(user.id, token)
         res.status(200).send({ user, token })
+        return
     } catch (err) {
         res.status(500).send(err)
     }
