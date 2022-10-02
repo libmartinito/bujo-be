@@ -30,3 +30,10 @@ export const getPassword = async (email) => {
     const res = await query(sql, params)
     return res.password
 }
+
+export const getUserTokens = async (id) => {
+    const sql = "select token from users where user_id = $1"
+    const params = [id]
+    const res = await query(sql, params)
+    return res
+}
