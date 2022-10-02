@@ -5,8 +5,12 @@ import { router as logRouter } from "./src/routes/log.route.js"
 
 dotenv.config()
 
-export const app = express()
+const app = express()
 
 app.use(express.json())
 app.use(userRouter)
 app.use(logRouter)
+
+const port = process.env.PORT
+
+app.listen(port)
