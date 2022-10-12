@@ -7,7 +7,8 @@ export const register = async (req, res) => {
         const { email, password } = req.body
         const oldUser = await db.getUserByEmail(email)
         if (oldUser) {
-            res.status(400).send({ message: "User already exists"})
+            res.status(400).send({ message: "User already exists" })
+            return
         }
         req.body.password = await bcrypt.hash(password, 8)
         const user = await db.createUser(req.body)
@@ -26,12 +27,14 @@ export const login = async (req, res) => {
         const { email, password } = req.body
         const user = await db.getUserByEmail(email)
         if (!user) {
-            res.status(400).send({ message: "User does not exist"})
+            res.status(400).send({ message: "User does not exist" })
+            return
         }
         const storedPassword = await db.getPassword(email)
         const isPasswordMatch = await bcrypt.compare(password, storedPassword)
         if (!isPasswordMatch) {
-            res.status(400).send({ message: "Password does not match"})
+            res.status(400).send({ message: "Password does not match" })
+            return
         }
         delete user[password]
         const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET)
