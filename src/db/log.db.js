@@ -9,16 +9,18 @@ export const createLog = async (payload) => {
     await query(sql, params)
 }
 
-export const getMonthlyLogs = async (payload) => {
-    const { user_id, year, month } = payload
+export const getMonthlyLogs = async (params, query) => {
+    const { user_id } = params
+    const { year, month } = query
     const sql = "select * from logs where user_id = $1 and extract(year from created_at) = $2 and extract(month from created_at) = $3"
     const params = [user_id, year, month]
     const res = await query(sql, params)
     return res
 }
 
-export const getDailyLogs = async (payload) => {
-    const { user_id, year, month, day } = payload
+export const getDailyLogs = async (params, query) => {
+    const { user_id } = params
+    const { year, month, day } = query
     const sql = "select * from logs where user_id = $1 and extract(year from created_at) = $2 and extract(month from created_at) = $3 and extract(day from created_at) = $4"
     const params = [user_id, year, month, day]
     const res = await query(sql, params)
