@@ -11,7 +11,8 @@ export const createLog = async (req, res) => {
 
 export const getMonthlyLogs = async (req, res) => {
     try {
-        const res = await db.getMonthlyLogs(req.params, req.query)
+        const payload = { ...req.params, ...req.query }
+        const res = await db.getMonthlyLogs(payload)
         res.status(200).send(res)
     } catch (err) {
         res.status(500).send(err)
@@ -20,7 +21,8 @@ export const getMonthlyLogs = async (req, res) => {
 
 export const getDailyLogs = async (req, res) => {
     try {
-        const res = await db.getDailyLogs(req.params, req.query)
+        const payload = { ...req.params, ...req.query }
+        const res = await db.getDailyLogs(payload)
         res.status(200).send(res)
     } catch (err) {
         res.status(500).send(err)
